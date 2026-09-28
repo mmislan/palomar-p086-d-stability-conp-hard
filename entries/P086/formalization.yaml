@@ -1,0 +1,95 @@
+{
+  "version": "v0.4",
+  "project": {
+    "name": "Deciding D-stability is coNP-hard",
+    "description": "The computational difficulty of D-stability, raised by Chen, Fan and Yu (1995, doi:10.1016/0167-6911(94)00036-U), is addressed by an explicit integer-matrix reduction from PARTITION. For positive weights of total 2T, the construction produces a matrix of order m + 4 that is D-stable exactly when no subset has weight T. When an equal split exists, some positive diagonal scaling has an eigenvalue with strictly positive real part. A Pell recursion supplies the parameters, with a logarithmic search bound and an explicit bound on every matrix entry. These bounds give polynomial binary output length. Together with the classical NP-completeness of PARTITION, the reduction yields coNP-hardness of D-stability and D-semistability, and NP-hardness of strict D-instability, even for a four-dimensional core with attachments at one coordinate.",
+    "authors": [
+      "Michael Mislan"
+    ],
+    "responsible_maintainers": [
+      "Michael Mislan"
+    ],
+    "license": "Apache-2.0"
+  },
+  "classification": {
+    "arxiv": [
+      "math.DS"
+    ],
+    "msc2020": [
+      "15A18",
+      "68Q17",
+      "93D09"
+    ]
+  },
+  "sources": [
+    {
+      "title": "Deciding D-stability is coNP-hard",
+      "authors": [
+        "Michael Mislan"
+      ],
+      "type": "paper",
+      "relationship": "formalizes",
+      "location": "papers/P086/paper.pdf",
+      "note": "Theorem 4.3, integer encoding in Section 5, and formal correspondence in Section 7. The selected declarations prove the reduction, search/entry bounds, and stability/semistability dichotomy.",
+      "url": "https://github.com/michael-mislan/Reaction_Networks/blob/main/Theory/D-Stability/P086-deciding-d-stability-conp-hard.pdf"
+    },
+    {
+      "title": "On D-stability and structured singular values",
+      "authors": [
+        "Jie Chen",
+        "Michael K. H. Fan",
+        "Cheng-Ching Yu"
+      ],
+      "type": "paper",
+      "relationship": "background",
+      "id": "doi:10.1016/0167-6911(94)00036-U",
+      "location": "https://doi.org/10.1016/0167-6911(94)00036-U",
+      "note": "Systems & Control Letters 24 (1995), 19–24. Its abstract raises the computational difficulty of checking D-stability. This is background motivation, not a proved reduction to D-stability."
+    }
+  ],
+  "status": {
+    "scope": "For every nonempty finite index type, positive integer weights w and natural T with sum w = 2T, an explicit (4 + card κ)-dimensional integer matrix satisfies the selected Pell-search and entry-size bounds. D-stability is equivalent to absence of an equal partition. No-instances are D-stable and D-semistable; yes-instances are strictly D-unstable and neither D-stable nor D-semistable.",
+    "sorry_count": 0,
+    "sorry_in_definitions": 0,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "automation": {
+    "methods": [
+      {
+        "method": "agent",
+        "tool_setup": "AI-assisted proof development, source review and submission preparation using Codex.",
+        "framework": "Codex",
+        "models": []
+      }
+    ],
+    "notes": "Complete historical model identifiers are not available and are not inferred."
+  },
+  "review": {
+    "status": "agent-reviewed",
+    "notes": "Agent-assisted source review of the selected declarations, literal matrix construction and manuscript correspondence. See entries/P086/CLAIM-EVIDENCE.md."
+  },
+  "fidelity": {
+    "divergences": "The Lean endpoints establish the integer reduction, logarithmic Pell-search bound, entry bounds and promise dichotomy. The use of PARTITION NP-completeness, binary-machine running-time analysis and handling of trivial or odd-total inputs are conventional arguments in Section 5. The hardness is for binary encoding; strong hardness and membership in coNP are not established."
+  },
+  "alignment": {
+    "namespace": "DStabilityHardness",
+    "statements": [
+      {
+        "source": "Sections 5 and 7",
+        "lean": "DStabilityHardness.dStability_coNP_reduction",
+        "module": "Registry.P086.Challenge",
+        "status": "proved"
+      },
+      {
+        "source": "Sections 5 and 7",
+        "lean": "DStabilityHardness.partition_dichotomy",
+        "module": "Registry.P086.Challenge",
+        "status": "proved"
+      }
+    ]
+  }
+}

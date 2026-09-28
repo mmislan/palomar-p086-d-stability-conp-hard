@@ -1,0 +1,1 @@
+Original Lean proofs and software are licensed under Apache-2.0. The manuscript and figures are licensed under CC-BY-4.0; see papers/P086/LICENSE-CC-BY-4.0.txt. Dependency licenses remain in force. The submission adapts module visibility and manuscript abstract wording while preserving mathematical content.

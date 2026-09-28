@@ -1,0 +1,13 @@
+{
+  "challenge_module": "Registry.P086.Challenge",
+  "solution_module": "Registry.P086.Solution",
+  "theorem_names": [
+    "DStabilityHardness.dStability_coNP_reduction",
+    "DStabilityHardness.partition_dichotomy"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}
