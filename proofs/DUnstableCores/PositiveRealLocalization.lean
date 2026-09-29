@@ -133,7 +133,7 @@ noncomputable def activeReaction
     (f : Species → Species ⊕ Reaction) (j : activeSpecies f) : Reaction :=
   (f j.1).getRight ((mem_activeSpecies_iff f j.1).mp j.2)
 
-@[simp] theorem assignment_eq_inr_activeReaction
+theorem assignment_eq_inr_activeReaction
     {Species Reaction : Type*} [Fintype Species] [DecidableEq Species]
     (f : Species → Species ⊕ Reaction) (j : activeSpecies f) :
     f j.1 = Sum.inr (activeReaction f j) := by

@@ -310,7 +310,11 @@ theorem quartic_of_eigenpair {ι : Type*} [Fintype ι] [DecidableEq ι]
     quartic a b c d lam = 0 := by
   have hroot := heig.isRoot_charpoly
   have hmap : (complexify A).charpoly = A.charpoly.map (algebraMap ℝ ℂ) := by
-    simpa [complexify] using Matrix.charpoly_map A (algebraMap ℝ ℂ)
+    have hmatrix : complexify A = A.map (algebraMap ℝ ℂ) := by
+      ext i j
+      rfl
+    rw [hmatrix]
+    exact Matrix.charpoly_map A (algebraMap ℝ ℂ)
   rw [hmap, hp] at hroot
   simpa [quartic] using hroot.eq_zero
 
@@ -319,7 +323,11 @@ theorem eigenpair_of_quartic_root {ι : Type*} [Fintype ι] [DecidableEq ι]
     {lam : ℂ} (hz : quartic a b c d lam = 0) :
     ∃ v : ι → ℂ, HasEigenpair A lam v := by
   have hmap : (complexify A).charpoly = A.charpoly.map (algebraMap ℝ ℂ) := by
-    simpa [complexify] using Matrix.charpoly_map A (algebraMap ℝ ℂ)
+    have hmatrix : complexify A = A.map (algebraMap ℝ ℂ) := by
+      ext i j
+      rfl
+    rw [hmatrix]
+    exact Matrix.charpoly_map A (algebraMap ℝ ℂ)
   apply hasEigenpair_of_isRoot_complexified_charpoly
   rw [hmap, hp]
   simpa [quartic] using hz

@@ -79,9 +79,13 @@ theorem det_selected_characteristic_matrix_factorization
       ∏ j, assignmentColumnFactor f j = _
   rw [show Matrix.det (assignmentPolynomialMatrix Q f) =
       C (Matrix.det (assignmentNumericMatrix Q f)) by
-    simpa [assignmentPolynomialMatrix] using
-      ((Polynomial.C : ℝ →+* ℝ[X]).map_det
-        (assignmentNumericMatrix Q f)).symm]
+    have hmap : assignmentPolynomialMatrix Q f =
+        (assignmentNumericMatrix Q f).map Polynomial.C := by
+      ext i j
+      rfl
+    rw [hmap]
+    exact ((Polynomial.C : ℝ →+* ℝ[X]).map_det
+      (assignmentNumericMatrix Q f)).symm]
 
 /-- Inactive species, equivalently the identity columns of an augmented
 assignment. -/
@@ -236,7 +240,7 @@ theorem det_assignmentNumericMatrix_eq_det_activeNegativeMatrix
         activeNegativeMatrix Q f := by
     ext i j
     simp [Matrix.toSquareBlockProp, Matrix.toBlock,
-      assignmentNumericMatrix, activeNegativeMatrix]
+      assignmentNumericMatrix, activeNegativeMatrix, assignment_eq_inr_activeReaction]
   have hinactive :
       (assignmentNumericMatrix Q f).toSquareBlockProp
           (fun j => j ∉ activeSpecies f) = 1 := by
@@ -317,9 +321,8 @@ theorem activeNegativeMatrix_eq_neg_child_realMatrix
     activeNegativeMatrix Q f =
       -(supportedAssignmentChild Q f hf).realMatrix := by
   ext i j
-  simp only [Matrix.neg_apply]
   change -(Q.stoich i.1 (activeReaction f j) : ℝ) =
     -((Q.stoich i.1 ((supportedAssignmentChild Q f hf).assign j).1 : ℤ) : ℝ)
-  rw [supportedAssignmentChild_assign_val]
+  erw [supportedAssignmentChild_assign_val]
 
 end DUnstableCores

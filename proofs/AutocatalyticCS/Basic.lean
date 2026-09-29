@@ -2,6 +2,7 @@ module
 
 public import Mathlib.Data.Matrix.Basic
 public import Mathlib.Data.Rat.Defs
+public import Mathlib.Algebra.Field.Rat
 
 @[expose] public section
 

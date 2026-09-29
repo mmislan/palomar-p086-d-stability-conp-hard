@@ -269,7 +269,7 @@ theorem reverse_absorption (B : Matrix ι ι ℝ) (p : ι) (r t : κ → ℝ)
         have hsum : (∑ j, (r j : ℂ)*w j) + z*(a : ℂ)*v p = (X : ℂ)*v p := by
           rw [← hload]
           simpa [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.mul_sum, a] using hs
-        simp only [attached, if_true, u, Sum.elim_inl, Sum.elim_inr]
+        simp only [attached, ite_true, u, Sum.elim_inl, Sum.elim_inr]
         simp at hi
         dsimp [q']
         push_cast

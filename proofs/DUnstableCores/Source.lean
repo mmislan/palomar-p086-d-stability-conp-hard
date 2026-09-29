@@ -229,7 +229,7 @@ def matchingOrderSource : SourceNetwork OneSpecies TwoReactions where
   catalyst_le_reactant := by simp
   catalyst_le_product := by simp
 
-private def chooseReactionZero :
+def chooseReactionZero :
     {s // s ∈ ({0} : Finset OneSpecies)} ≃
       {r // r ∈ ({0} : Finset TwoReactions)} where
   toFun := fun _ => ⟨0, by simp⟩
@@ -240,7 +240,7 @@ private def chooseReactionZero :
     apply Subtype.ext
     exact (Finset.mem_singleton.mp r.property).symm
 
-private def chooseReactionOne :
+def chooseReactionOne :
     {s // s ∈ ({0} : Finset OneSpecies)} ≃
       {r // r ∈ ({1} : Finset TwoReactions)} where
   toFun := fun _ => ⟨1, by simp⟩
@@ -263,7 +263,7 @@ def negativeChild : ChildSelection matchingOrderSource where
   assign := chooseReactionOne
   reactant_match := by intro x; simp [matchingOrderSource, SourceNetwork.toReactionNetwork]
 
-private def selectedSpecies :
+def selectedSpecies :
     {s // s ∈ ({0} : Finset OneSpecies)} := ⟨0, by simp⟩
 
 /-- Reactant support alone does not determine the child matrix: the selected

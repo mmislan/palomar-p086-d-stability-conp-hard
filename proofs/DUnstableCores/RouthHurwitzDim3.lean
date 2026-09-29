@@ -38,8 +38,11 @@ theorem hurwitzNonpositive_of_cubic_coeff_nonneg_delta_nonneg
   have hroot := heig.isRoot_charpoly
   have hmap : (complexify A).charpoly =
       A.charpoly.map (algebraMap ℝ ℂ) := by
-    simpa [complexify] using
-      (Matrix.charpoly_map A (algebraMap ℝ ℂ))
+    have hmatrix : complexify A = A.map (algebraMap ℝ ℂ) := by
+      ext i j
+      rfl
+    rw [hmatrix]
+    exact Matrix.charpoly_map A (algebraMap ℝ ℂ)
   rw [hmap, hpoly] at hroot
   have hp := hroot.eq_zero
   have hre := congrArg Complex.re hp
@@ -201,8 +204,11 @@ theorem cubic_delta_negative_implies_hurwitzUnstable
   have hrootA : (complexify A).charpoly.IsRoot lam := by
     have hmap : (complexify A).charpoly =
         A.charpoly.map (algebraMap ℝ ℂ) := by
-      simpa [complexify] using
-        (Matrix.charpoly_map A (algebraMap ℝ ℂ))
+      have hmatrix : complexify A = A.map (algebraMap ℝ ℂ) := by
+        ext i j
+        rfl
+      rw [hmatrix]
+      exact Matrix.charpoly_map A (algebraMap ℝ ℂ)
     rw [hmap, hpoly]
     simpa using hpcomplex
   obtain ⟨v, heig⟩ := hasEigenpair_of_isRoot_complexified_charpoly hrootA

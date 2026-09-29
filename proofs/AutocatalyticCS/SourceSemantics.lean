@@ -34,25 +34,25 @@ def species (E : IndexedMatching Q) : Finset X :=
 def reactions (E : IndexedMatching Q) : Finset R :=
   Finset.univ.image E.right
 
-private def leftEmbedding (E : IndexedMatching Q) : Fin E.card ↪ X :=
+def leftEmbedding (E : IndexedMatching Q) : Fin E.card ↪ X :=
   ⟨E.left, E.left_injective⟩
 
-private def rightEmbedding (E : IndexedMatching Q) : Fin E.card ↪ R :=
+def rightEmbedding (E : IndexedMatching Q) : Fin E.card ↪ R :=
   ⟨E.right, E.right_injective⟩
 
-private def leftRangeEquiv (E : IndexedMatching Q) :
+def leftRangeEquiv (E : IndexedMatching Q) :
     {x // x ∈ Set.range E.left} ≃ {x // x ∈ E.species} :=
   Equiv.subtypeEquivRight fun x => by simp [species]
 
-private def rightRangeEquiv (E : IndexedMatching Q) :
+def rightRangeEquiv (E : IndexedMatching Q) :
     {r // r ∈ Set.range E.right} ≃ {r // r ∈ E.reactions} :=
   Equiv.subtypeEquivRight fun r => by simp [reactions]
 
-private def leftIndexEquiv (E : IndexedMatching Q) :
+def leftIndexEquiv (E : IndexedMatching Q) :
     {x // x ∈ E.species} ≃ Fin E.card :=
   E.leftRangeEquiv.symm |>.trans E.leftEmbedding.toEquivRange.symm
 
-private def rightIndexEquiv (E : IndexedMatching Q) :
+def rightIndexEquiv (E : IndexedMatching Q) :
     {r // r ∈ E.reactions} ≃ Fin E.card :=
   E.rightRangeEquiv.symm |>.trans E.rightEmbedding.toEquivRange.symm
 

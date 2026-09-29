@@ -35,7 +35,9 @@ noncomputable def singletonChild
     have hx : x.1 = i := Finset.mem_singleton.mp x.2
     have har : (singletonEquiv i r x).1 = r :=
       Finset.mem_singleton.mp (singletonEquiv i r x).2
-    simpa [hx, har] using hr
+    change Q.Reactant x.1 (singletonEquiv i r x).1
+    rw [hx, har]
+    exact hr
 
 theorem singletonChild_realMatrix_entry
     {Species Reaction : Type*} [DecidableEq Species] [DecidableEq Reaction]
@@ -55,13 +57,12 @@ theorem positive_reactant_stoich_yields_singleton_core
     ∃ core : ChildSelection Q, IsDUnstableCore core := by
   let child := singletonChild Q i r hr
   let k : child.species := ⟨i, by simp [child, singletonChild]⟩
-  letI : Unique child.species := {
+  let : Unique child.species := {
     default := k
     uniq := by
       intro x
       apply Subtype.ext
       have hx : x.1 ∈ ({i} : Finset Species) := by
-        change x.1 ∈ ({i} : Finset Species)
         exact x.2
       exact Finset.mem_singleton.mp hx
   }

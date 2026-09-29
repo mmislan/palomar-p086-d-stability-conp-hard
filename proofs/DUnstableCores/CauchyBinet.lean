@@ -32,7 +32,7 @@ theorem det_rectangular_expansion {K : Type*} [CommRing K]
     Matrix.det (fun i j => ∑ r : ρ, S i r * R r j) =
       ∑ f : α → ρ, Matrix.det (selectedMatrix S f) * ∏ j, R (f j) j := by
   classical
-  rw [Matrix.det_apply']
+  erw [Matrix.det_apply']
   simp_rw [Fintype.prod_sum, Finset.mul_sum]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
@@ -89,7 +89,7 @@ theorem unsupported_assignment_weight_zero
     have hprod : (∏ j, R.value (f j) j) = 0 := by
       exact Finset.prod_eq_zero (Finset.mem_univ s) hz
     rw [hprod, mul_zero]
-  · rw [selectedMatrix_det_eq_zero_of_not_injective _ f hinj, zero_mul]
+  · erw [selectedMatrix_det_eq_zero_of_not_injective _ f hinj, zero_mul]
 
 /-- The determinant of a source Jacobian is exactly the sum of the weights of
 source-supported injective full child assignments. -/

@@ -19,8 +19,10 @@ def diagAdd (M : Matrix ι ι ℂ) (p : ι) (a : ℂ) : Matrix ι ι ℂ :=
 omit [Fintype ι] in
 theorem diagAdd_apply (M : Matrix ι ι ℂ) (p : ι) (a : ℂ) (i j : ι) :
     diagAdd M p a i j = M i j + if i=p ∧ j=p then a else 0 := by
+  change (Function.update (fun k l => M k l) p
+    (fun l => M p l + a * (Pi.single p (1 : ℂ) : ι → ℂ) l) i) j = _
   by_cases hi : i=p <;> by_cases hj : j=p <;>
-    simp [diagAdd, Matrix.updateRow, hi, hj]
+    simp [hi, hj]
 
 theorem det_diagAdd (M : Matrix ι ι ℂ) (p : ι) (a : ℂ) :
     (diagAdd M p a).det = M.det + a*M.adjugate p p := by
@@ -130,7 +132,8 @@ theorem quotient_real (B : Matrix ι ι ℝ) (p : ι) (q : ι → ℝ) (s : ℝ)
   let M : Matrix ι ι ℝ := fun i j => (if i=j then s*q i else 0)-B i j
   have hp : pencil B q (s : ℂ) = Complex.ofRealHom.mapMatrix M := by
     ext i j
-    dsimp [pencil, M]
+    change (if i = j then (s : ℂ) * (q i : ℂ) else 0) - (B i j : ℂ) =
+      (((if i = j then s * q i else 0) - B i j : ℝ) : ℂ)
     split_ifs <;> simp
   unfold quotient
   rw [hp, ← Complex.ofRealHom.map_det, ← Complex.ofRealHom.map_adjugate]

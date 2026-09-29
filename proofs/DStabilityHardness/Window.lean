@@ -185,10 +185,10 @@ theorem rounding_bound (z : ℂ) (hz : z.re = 0) (r t : κ → ℝ) (hr : ∀ j,
     change (x k - if k ∈ S then r k else 0) ^ 2 ≤ x k * (r k - x k)
     by_cases hk : k ∈ S
     · have hk' : r k ≤ 2 * x k := (Finset.mem_filter.mp hk).2
-      rw [if_pos hk]
+      rw [ite_eq_left hk]
       nlinarith
     · have hk' : ¬ r k ≤ 2 * x k := fun h => hk (Finset.mem_filter.mpr ⟨Finset.mem_univ _, h⟩)
-      rw [if_neg hk]
+      rw [ite_eq_right hk]
       push Not at hk'
       nlinarith
   have := sq_le_sq.mp key

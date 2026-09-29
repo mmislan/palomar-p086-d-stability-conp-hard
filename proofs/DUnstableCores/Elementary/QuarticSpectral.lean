@@ -68,7 +68,11 @@ theorem elementaryQuartic_matrix_nonpositive
   rintro ⟨z,v,hz,heig⟩
   have hroot := heig.isRoot_charpoly
   have hmap : (complexify A).charpoly = A.charpoly.map (algebraMap ℝ ℂ) := by
-    simpa [complexify] using Matrix.charpoly_map A (algebraMap ℝ ℂ)
+    have hmatrix : complexify A = A.map (algebraMap ℝ ℂ) := by
+      ext i j
+      rfl
+    rw [hmatrix]
+    exact Matrix.charpoly_map A (algebraMap ℝ ℂ)
   rw [hmap, hp] at hroot
   have hzero : elementaryQuartic a b c d z = 0 := by
     simpa [elementaryQuartic] using hroot.eq_zero
@@ -136,7 +140,11 @@ theorem elementary_matrix_unstable
     (hp : IsElementaryQuartic A 10908 185600 1280000 64000000) : HurwitzUnstable A := by
   obtain ⟨z,hz,hroot⟩ := elementary_exact_quartic_unstable_root
   have hmap : (complexify A).charpoly = A.charpoly.map (algebraMap ℝ ℂ) := by
-    simpa [complexify] using Matrix.charpoly_map A (algebraMap ℝ ℂ)
+    have hmatrix : complexify A = A.map (algebraMap ℝ ℂ) := by
+      ext i j
+      rfl
+    rw [hmatrix]
+    exact Matrix.charpoly_map A (algebraMap ℝ ℂ)
   have hr : (complexify A).charpoly.IsRoot z := by
     rw [hmap,hp]
     simpa [elementaryQuartic] using hroot

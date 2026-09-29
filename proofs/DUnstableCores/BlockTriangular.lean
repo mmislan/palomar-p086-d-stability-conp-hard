@@ -58,7 +58,7 @@ theorem isRoot_fromBlocks_zero21_localizes
   rw [complexify_fromBlocks] at hroot
   change (Matrix.fromBlocks (complexify A) (fun i j => (B i j : ℂ)) 0
     (complexify D)).charpoly.IsRoot lam at hroot
-  rw [Matrix.charpoly_fromBlocks_zero₂₁] at hroot
+  erw [Matrix.charpoly_fromBlocks_zero₂₁] at hroot
   exact (mul_eq_zero.mp (by simpa [Polynomial.IsRoot] using hroot))
 
 /-- Strict right-half-plane instability of an upper block-triangular matrix
@@ -89,7 +89,7 @@ theorem rightScale_fromBlocks_zero21
         (fun i j => B i j * d (Sum.inr j)) 0
         (rightScale D (fun j => d (Sum.inr j))) := by
   ext i j
-  cases i <;> cases j <;> simp [rightScale]
+  cases i <;> cases j <;> simp [rightScale, Matrix.fromBlocks]
 
 /-- D-instability of a block-triangular matrix localizes to a diagonal block;
 the off-diagonal coupling cannot manufacture D-instability. -/
