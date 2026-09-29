@@ -89,19 +89,31 @@ theorem pellSeq_pell (k : ℕ) : (pellSeq k).1 ^ 2 = 3 * (pellSeq k).2 ^ 2 + 1 :
   | succ k ih => simp only [pellSeq]; exact pell_step ih
 
 theorem pellSeq_q_le_p (k : ℕ) : (pellSeq k).2 ≤ (pellSeq k).1 := by
-  have h := pellSeq_pell k
-  by_contra hc
-  push Not at hc
-  have : (pellSeq k).1 ^ 2 < (pellSeq k).2 ^ 2 := Nat.pow_lt_pow_left hc (by norm_num)
-  omega
+  cases k with
+  | zero => exact Nat.le_succ 1
+  | succ k =>
+    change (pellSeq k).1 + 2 * (pellSeq k).2 ≤
+      2 * (pellSeq k).1 + 3 * (pellSeq k).2
+    apply Nat.add_le_add
+    · calc
+        (pellSeq k).1 = 1 * (pellSeq k).1 := (Nat.one_mul _).symm
+        _ ≤ 2 * (pellSeq k).1 := Nat.mul_le_mul_right _ (Nat.le_succ 1)
+    · exact Nat.mul_le_mul_right _ (Nat.le_succ 2)
 
 theorem pellSeq_three_pow (k : ℕ) : 3 ^ k ≤ (pellSeq k).2 := by
   induction k with
-  | zero => simp [pellSeq]
+  | zero => exact Nat.le_refl 1
   | succ k ih =>
-    have := pellSeq_q_le_p k
-    simp only [pellSeq, pow_succ]
-    omega
+    change 3 ^ (k + 1) ≤ (pellSeq k).1 + 2 * (pellSeq k).2
+    calc
+      3 ^ (k + 1) = 3 ^ k * 3 := Nat.pow_succ 3 k
+      _ ≤ (pellSeq k).2 * 3 := Nat.mul_le_mul_right 3 ih
+      _ = (pellSeq k).2 * 2 + (pellSeq k).2 := Nat.mul_succ _ 2
+      _ = 2 * (pellSeq k).2 + (pellSeq k).2 :=
+        congrArg (fun x => x + (pellSeq k).2) (Nat.mul_comm _ 2)
+      _ = (pellSeq k).2 + 2 * (pellSeq k).2 := Nat.add_comm _ _
+      _ ≤ (pellSeq k).1 + 2 * (pellSeq k).2 :=
+        Nat.add_le_add_right (pellSeq_q_le_p k) _
 
 theorem exists_pell_ge (N : ℕ) : ∃ k, N ≤ (pellSeq k).2 :=
   ⟨N, le_trans (Nat.lt_pow_self (by norm_num : 1 < 3)).le (pellSeq_three_pow N)⟩
